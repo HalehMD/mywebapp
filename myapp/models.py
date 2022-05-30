@@ -48,6 +48,11 @@ class Order(models.Model):
     order_status = models.IntegerField(choices=ORDER_STATUS, default=0)
     order_date = models.DateField(auto_now_add=True)
 
+    def total_cost(self):
+        total = 0
+        objects = Order.course.all()
+        for order in objects:
+            total += order.price
 
     def __str__(self):
         return '{} ({})'.format(', '.join(self.course.all().values_list('name', flat=True)), self.order_date)
