@@ -38,7 +38,6 @@ class Student(User):
         return f"{self.username} ({self.first_name} {self.last_name})"
 
 
-
 class Order(models.Model):
     ORDER_STATUS = [(0, 'Cancelled'), (1, 'Order Confirmed')]
     #course = models.ForeignKey(Course, related_name='orders', on_delete=models.CASCADE)
@@ -53,6 +52,7 @@ class Order(models.Model):
         objects = Order.course.all()
         for order in objects:
             total += order.price
+        return total
 
     def __str__(self):
         return '{} ({})'.format(', '.join(self.course.all().values_list('name', flat=True)), self.order_date)

@@ -1,6 +1,14 @@
 from django.shortcuts import render
 
 from django.http import HttpResponse
+<<<<<<< HEAD
+from .models import Order
+
+def write_result(request):
+
+    return HttpResponse("HI")
+
+=======
 from .models import Topic, Course, Student, Order
 from django.shortcuts import get_object_or_404
 
@@ -33,6 +41,7 @@ def about(request):
     response.write(heading1)
     
     return response
+>>>>>>> ac7428666852ee7ea856ece741f5b1c0632727c5
 
 def  detail(request, top_no):
     topic=get_object_or_404(Topic, pk=top_no)
