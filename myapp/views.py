@@ -40,13 +40,15 @@ def  detail(request, top_no):
     #get_object_or_404(topic, pk=1)
     course_list = Course.objects.filter(topic=Topic.objects.get(id=top_no))
     response = HttpResponse()
-    heading1 = '<h2>' + 'Topic name: ' + str(topic) + '</h2>'
-    heading2 = '<h2>' + 'Category: ' + str(topic.category) + '</h2>'
+    heading1 = '<h2 style="margin: 50px 50px 10px;">' + 'Topic name: ' + str(topic) + '</h2>'
+    heading2 = '<h2 style="margin: 10px 50px;">' + 'Category: ' + str(topic.category) + '</h2>'
+    heading3 = '<h3 style="margin: 10px 50px;">' + 'List of courses under ' + str(topic) + ' :' + '</h3>'
     response.write(heading1)
     response.write(heading2)
+    response.write(heading3)
     
     for course in course_list:
-        para = '<p>'+ str(course.id) + ': ' + str(course) +'</p>'
+        para = '<p style="margin: 10px 50px;">'+ str(course.id) + ': ' + str(course) +'</p>'
         response.write(para)
             
     return response
