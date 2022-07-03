@@ -26,5 +26,11 @@ def  detail(request, top_no):
     #topic=get_object_or_404(Topic, pk=top_no)
     topic= Topic.objects.get(id=top_no)
     #get_object_or_404(topic, pk=1)
-    course_list = Course.objects.filter(topic=Topic.objects.get(id=top_no))            
+    course_list = Course.objects.filter(topic=Topic.objects.get(id=top_no)) 
+    #course_list = topic.Course.all()   
     return render(request, 'myapp/detail.html', {'topic': topic, 'course_list': course_list})
+
+
+def courses(request):
+    courlist = Course.objects.all().order_by('id')
+    return render(request, 'myapp/courses.html', {'courlist': courlist})
