@@ -1,0 +1,24 @@
+{% extends 'myapp/base.html' %}
+
+{% block title %}
+    Courses
+{% endblock %}
+
+{% block body_block %}
+    {% if courdetails %}
+        <h2> Name of the course: {{ courdetails.name}}</h2>
+        <h3>Number of people interested: {{ courdetails.interested }}</h3>
+        <h3>Price of the course: ${{ courdetails.price }}</h3>
+        {% if courdetails.for_everyone == False %}
+            <h3>This course is not for Everyone</h3>
+        {% endif %}
+    {% endif %}
+    <hr/>
+    <h2>Are you interested in this course??</h2>
+    <form id="interest_form" method="post" action="{% url 'myapp:coursedetail' courdetails.id %}">
+        {% csrf_token %} 
+        {{ InterestForm.as_p }}
+        <input type="submit" value="Submit interest" /> 
+    </form>
+
+{% endblock %}

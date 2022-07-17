@@ -25,7 +25,11 @@ class Course(models.Model):
         return f"{self.name}"
     
     def discount(self):
-        return (self.price - (self.price*.10))
+        newPrice=float(self.price) - (float(self.price)*.10)
+        self.price = newPrice
+        self.save()
+        print(self.price)
+        return True
 
 
 class Student(User):
@@ -45,12 +49,12 @@ class Student(User):
 
 class Order(models.Model):
     ORDER_STATUS = [(0, 'Cancelled'), (1, 'Order Confirmed')]
-    #course = models.ForeignKey(Course, related_name='orders', on_delete=models.CASCADE)
-    course = models.ManyToManyField(Course, related_name='orders')
+    course = models.ForeignKey(Course, default= '000', related_name='orders', on_delete=models.CASCADE)
+    #course = models.ManyToManyField(Course, related_name='orders')
     student = models.ForeignKey(Student, related_name='orders', on_delete=models.CASCADE)
-    levels = models.PositiveIntegerField(default=0)
+    levels = models.PositiveIntegerField(default=1)
     order_status = models.IntegerField(choices=ORDER_STATUS, default=0)
-    order_date = models.DateField(auto_now_add=True)
+    order_date = models.DateField(auto_now=False)
 
     def total_cost(self):
         total = 0
@@ -58,6 +62,8 @@ class Order(models.Model):
         for order in objects:
             total += order.price
         return total
-
+    
     def __str__(self):
-        return '{} ({})'.format(', '.join(self.course.all().values_list('name', flat=True)), self.order_date)
+        return f"{self.course.name} {self.order_date}"
+    #def __str__(self):
+       # return '{} ({})'.format(', '.join(self.course.all().values_list('name', flat=True)), self.order_date)
